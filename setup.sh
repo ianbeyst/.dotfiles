@@ -3,6 +3,8 @@
 DFDIR=$(dirname $(readlink -f "$0"))
 . $DFDIR/secrets
 
+
+
 # Make directories if they don't exist yet
 mkdir -p "$XDG_CONFIG_HOME"/vim
 mkdir -p "$XDG_CONFIG_HOME"/vim/colors
@@ -11,6 +13,9 @@ mkdir -p "$XDG_DATA_HOME"/vim/undo
 mkdir -p "$XDG_DATA_HOME"/vim/swap
 mkdir -p "$XDG_DATA_HOME"/vim/backup
 mkdir -p ~/data
+mkdir -p ~/src
+
+
 
 # Create symlinks
 ln -sfn $DFDIR/config/xinitrc ~/.xinitrc
@@ -21,10 +26,45 @@ ln -sfn $DFDIR/config/vimrc "$XDG_CONFIG_HOME"/vim/vimrc
 ln -sfn $DFDIR/config/vimcolors "$XDG_CONFIG_HOME"/vim/colors/flattened_dark.vim
 ln -sfn $DFDIR/config/redshift "$XDG_CONFIG_HOME"/redshift.conf
 
+
+
+# Set up git
 touch "$XDG_CONFIG_HOME"/git/config
 git config --global user.name $GITNAME
 git config --global user.email $GITEMAIL
 
+
+
+# Build dwm, st and slstatus
+cd ~/src
+git clone https://git.suckless.org/dwm
+git clone https://git.suckless.org/st
+git clone https://github.com/ianbeyst/slstatus.git
+
+cd dwm
+patch -p1 < "$DFDIR"/patches/dwm-customized-af20849.diff
+make
+sudo make install
+make clean
+
+cd ../st
+patch -p1 < "$DFDIR"/patches/st-customized-51e19ea.diff
+make
+sudo make install
+make clean
+
+cd ../slstatus
+for dev in `ls /sys/class/net`; do
+    if [ -d "/sys/class/net/$dev/wireless" ]; then WIFIDEV=$(echo $dev); fi;
+done
+sed -i 's/wlp1s0/'$WIFIDEV'/g' config.h
+make
+sudo make install
+make clean
+
+
+
+# Set up configuration with root access
 sudo DFDIR=$DFDIR /bin/sh -c '
     # Suspend on critical battery state of charge
     mkdir -p /etc/periodic/1min
