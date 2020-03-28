@@ -19,7 +19,7 @@ index 1c0b587..bf723d3 100644
 -static const char col_cyan[]        = "#005577";
 +static const char *fonts[]          = { "dejavu sans mono:pixelsize=14:antialias=true:autohint=true" };
 +static const char dmenufont[]       = "dejavu sans mono:pixelsize=14:antialias=true:autohint=true";
-+static const char solar_base03[]    = "#073642";
++static const char solar_base03[]    = "#002b36";
 +static const char solar_base0[]     = "#839496";
 +static const char solar_red[]       = "#dc322f";
  static const char *colors[][3]      = {
