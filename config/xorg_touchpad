@@ -6,6 +6,5 @@ Section "InputClass"
     Option "ClickMethod" "clickfinger"
     Option "DisableWhileTyping" "false"
     Option "Accel Speed" "0.4"
-    Option "HorizontalScrolling" "false"
     Option "AccelProfile" "adaptive"
 EndSection
