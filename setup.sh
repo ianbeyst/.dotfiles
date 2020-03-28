@@ -1,6 +1,7 @@
 #!/bin/sh
 
 DFDIR=$(dirname $(readlink -f "$0"))
+. secrets
 
 # Make directories if they don't exist yet
 mkdir -p "$XDG_CONFIG_HOME"/vim
@@ -19,6 +20,10 @@ ln -sfn $DFDIR/config/ashrc "$XDG_CONFIG_HOME"/ashrc
 ln -sfn $DFDIR/config/vimrc "$XDG_CONFIG_HOME"/vim/vimrc
 ln -sfn $DFDIR/config/vimcolors "$XDG_CONFIG_HOME"/vim/colors/flattened_dark.vim
 ln -sfn $DFDIR/config/redshift "$XDG_CONFIG_HOME"/redshift.conf
+
+touch "$XDG_CONFIG_HOME"/git/config
+git config --global user.name $GITNAME
+git config --global user.email $GITEMAIL
 
 sudo DFDIR=$DFDIR /bin/sh -c '
     # Suspend on critical battery state of charge
