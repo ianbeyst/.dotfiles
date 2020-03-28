@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DFDIR=$(dirname $(readlink -f "$0"))
-. secrets
+. $DFDIR/secrets
 
 # Make directories if they don't exist yet
 mkdir -p "$XDG_CONFIG_HOME"/vim
