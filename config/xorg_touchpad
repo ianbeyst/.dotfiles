@@ -1,7 +1,11 @@
 Section "InputClass"
-    MatchIsTouchpad "on"
-    Identifier  "Touchpads"
+    Identifier  "Touchpad"
     Driver      "libinput"
+    MatchIsTouchpad "on"
     Option "Tapping" "on"
+    Option "ClickMethod" "clickfinger"
+    Option "DisableWhileTyping" "false"
     Option "Accel Speed" "0.4"
+    Option "HorizontalScrolling" "false"
+    Option "AccelProfile" "adaptive"
 EndSection
