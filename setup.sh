@@ -14,7 +14,7 @@ mkdir -p "$XDG_DATA_HOME"/vim/swap
 mkdir -p "$XDG_DATA_HOME"/vim/backup
 mkdir -p ~/data
 mkdir -p ~/src
-
+mkdir -p ~/data/webcam
 
 
 # Create symlinks
@@ -48,7 +48,8 @@ sudo make install
 make clean
 
 cd ../st
-patch -p1 < "$DFDIR"/patches/st-customized-51e19ea.diff
+git checkout a2c479c
+patch -p1 < "$DFDIR"/patches/st-customized-a2c479c.diff
 make
 sudo make install
 make clean
@@ -61,6 +62,10 @@ sed -i 's/wlp1s0/'$WIFIDEV'/g' config.h
 make
 sudo make install
 make clean
+cd ..
+rm -rf dwm
+rm -rf st
+rm -rf slstatus
 
 
 
@@ -84,4 +89,8 @@ sudo DFDIR=$DFDIR /bin/sh -c '
 
     # Backlight brightess
     ln -sfn $DFDIR/scripts/bbright.sh /usr/local/bin/bbright
+
+    # Automatic webcam capture
+    ln -sfn $DFDIR/scripts/webcamshot.sh /usr/local/bin/webcamshot
+    echo "* * * * * webcamshot" > /etc/crontabs/io
 '
