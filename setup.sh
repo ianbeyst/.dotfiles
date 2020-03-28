@@ -5,6 +5,7 @@ DFDIR=$(dirname $(readlink -f "$0"))
 # Make directories if they don't exist yet
 mkdir -p "$XDG_CONFIG_HOME"/vim
 mkdir -p "$XDG_CONFIG_HOME"/vim/colors
+mkdir -p "$XDG_CONFIG_HOME"/git
 mkdir -p "$XDG_DATA_HOME"/vim/undo
 mkdir -p "$XDG_DATA_HOME"/vim/swap
 mkdir -p "$XDG_DATA_HOME"/vim/backup
