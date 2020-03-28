@@ -1,0 +1,14 @@
+[redshift]
+temp-day=6000
+temp-night=3500
+transition=1
+brightness=1
+elevation-high=4.0
+elevation-low=-2.0
+gamma=1.0
+location-provider=manual
+adjustment-method=randr
+
+[manual]
+lat=41
+lon=04
