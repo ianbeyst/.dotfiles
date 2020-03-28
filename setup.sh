@@ -30,4 +30,12 @@ sudo DFDIR=$DFDIR /bin/sh -c '
     # Suspend and lock on lid close
     mkdir -p /etc/acpi/LID
     ln -sfn $DFDIR/scripts/lidclose.sh /etc/acpi/LID/00000080
+
+    # Xorg settings
+    mkdir -p /etc/X11/xorg.conf.d
+    ln -sfn $DFDIR/config/xorg_touchpad /etc/X11/xorg.conf.d/30-touchpad.conf
+    ln -sfn $DFDIR/config/xorg_security /etc/X11/xorg.conf.d/00-security.conf
+
+    # Backlight brightess
+    ln -sfn $DFDIR/scripts/bbright.sh /usr/local/bin/bbright
 '

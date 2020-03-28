@@ -1,0 +1,7 @@
+Section "InputClass"
+    MatchIsTouchpad "on"
+    Identifier  "Touchpads"
+    Driver      "libinput"
+    Option "Tapping" "on"
+    Option "Accel Speed" "0.4"
+EndSection
