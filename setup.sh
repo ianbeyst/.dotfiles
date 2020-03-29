@@ -23,6 +23,7 @@ ln -sfn $DFDIR/config/xinitrc ~/.xinitrc
 ln -sfn $DFDIR/config/profile ~/.profile
 ln -sfn $DFDIR/config/bashrc ~/.bashrc
 ln -sfn $DFDIR/config/bash_profile ~/.bash_profile
+ln -sfn $DFDIR/config/Xmodmap "$XDG_CONFIG_HOME"/Xmodmap
 ln -sfn $DFDIR/config/inputrc "$XDG_CONFIG_HOME"/inputrc
 ln -sfn $DFDIR/config/xdg-dirs "$XDG_CONFIG_HOME"/user-dirs.dirs
 ln -sfn $DFDIR/config/vimrc "$XDG_CONFIG_HOME"/vim/vimrc
