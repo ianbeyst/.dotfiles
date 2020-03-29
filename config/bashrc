@@ -82,6 +82,7 @@ if [[ $- == *i* ]]; then
     alias dus="du -sch"
 
     # Source extra
+    source /usr/share/bash-completion/bash_completion
     source /usr/share/fzf/key-bindings.bash
     source /usr/share/bash-completion/completions/fzf
 fi
