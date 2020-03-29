@@ -97,4 +97,8 @@ sudo DFDIR=$DFDIR /bin/sh -c '
     # Automatic webcam capture
     ln -sfn $DFDIR/scripts/webcamshot.sh /usr/local/bin/webcamshot
     echo "* * * * * webcamshot" > /etc/crontabs/io
+
+    # Map caps lock to escape in terminals
+    ln -sfn $DFDIR/scripts/mapcapslock.sh /etc/local.d/mapcapslock.start
+    rc-update add local default
 '
