@@ -1,3 +1,5 @@
+autocmd VimEnter * silent exec "! echo -ne '\e[1 q'"
+
 " Conform to XDG specification
 set undodir=$XDG_DATA_HOME/vim/undo
 set directory=$XDG_DATA_HOME/vim/swap

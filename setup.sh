@@ -17,11 +17,14 @@ mkdir -p ~/src
 mkdir -p ~/data/webcam
 
 
+
 # Create symlinks
 ln -sfn $DFDIR/config/xinitrc ~/.xinitrc
 ln -sfn $DFDIR/config/profile ~/.profile
+ln -sfn $DFDIR/config/bashrc ~/.bashrc
+ln -sfn $DFDIR/config/bash_profile ~/.bash_profile
+ln -sfn $DFDIR/config/inputrc "$XDG_CONFIG_HOME"/inputrc
 ln -sfn $DFDIR/config/xdg-dirs "$XDG_CONFIG_HOME"/user-dirs.dirs
-ln -sfn $DFDIR/config/ashrc "$XDG_CONFIG_HOME"/ashrc
 ln -sfn $DFDIR/config/vimrc "$XDG_CONFIG_HOME"/vim/vimrc
 ln -sfn $DFDIR/config/vimcolors "$XDG_CONFIG_HOME"/vim/colors/flattened_dark.vim
 ln -sfn $DFDIR/config/redshift "$XDG_CONFIG_HOME"/redshift.conf

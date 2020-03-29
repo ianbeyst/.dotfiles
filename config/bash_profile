@@ -1,0 +1,3 @@
+export BASHPROFILESOURCED=yes
+source "$HOME"/.profile
+source "$HOME"/.bashrc

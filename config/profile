@@ -16,7 +16,6 @@ fi
 # Environment variables
 export EDITOR=vim
 export BROWSER=firefox
-export ENV="$XDG_CONFIG_HOME/ashrc"
 export XKB_DEFAULT_LAYOUT=dvorak
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export LESSHISTFILE="-"
