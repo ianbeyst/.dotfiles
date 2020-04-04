@@ -72,7 +72,7 @@ if [[ $- == *i* ]]; then
     # Aliases
     alias ls="ls --color=auto"
     alias lsl="ls -hlA --color=auto"
-    alias htop="htop -C"
+    alias htop="htop -Ct"
     alias startx="exec startx"
     alias startwl="exec swc-launch velox"
     alias envact="source .env/bin/activate"
