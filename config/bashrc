@@ -80,6 +80,8 @@ if [[ $- == *i* ]]; then
     alias feh="feh --keep-zoom-vp -B black"
     alias fehna="feh --keep-zoom-vp --force-aliasing -B black"
     alias dus="du -sch"
+    alias cpuhog="ps axhc -o cmd:15,%cpu --sort=-%cpu | head"
+    alias memhog="ps axhc -o cmd:15,%mem --sort=-%mem | head"
 
     # Source extra
     source /usr/share/bash-completion/bash_completion

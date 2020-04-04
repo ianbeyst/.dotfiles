@@ -40,5 +40,6 @@ set autoindent
 set expandtab
 set colorcolumn=79
 set encoding=utf-8
+set laststatus=2
 
 colorscheme flattened_dark
