@@ -49,27 +49,28 @@ if [[ $- == *i* ]]; then
     # Get Virtual Env
     get_venv() {
         if [ "$VIRTUAL_ENV" != "" ]; then
-            # Strip out the path and just leave the env name
             echo "─[ venv $VIRTUAL_ENV ]"
         else
-            # In case you don't have one activated
             echo ""
         fi
     }
-
-    # Environment variables
-    export INPUTRC="$XDG_CONFIG_HOME/inputrc"
-    export HISTFILE="$XDG_DATA_HOME/bash_history"
-    export HISTSIZE=1000000
-    export VIRTUAL_ENV_DISABLE_PROMPT=1
-    export FZF_DEFAULT_OPTS="--color=16 --reverse --height 50% --prompt ' └─[ --:-- ]─>> '"
-    export FZF_CTRL_T_OPTS="--preview '(cat {}) 2> /dev/null | head -300'"
 
     # Prompt
     PS1='$(echo -e "\[\033[1m\n\]") ┌─[ $? ]─[ $HOSTNAME ]─[ \w ]$(parse_git_branch)$(get_venv)$(echo -e "\[\033[0m\n\] \[\033[1m\]└─[ ")$(date +%H:%M)$(echo -e " ]─>> \[\033[0m\]")'
     PS2='             \[\033[1m\]>>\[\033[0m\] '
 
+    # Environment variables
+    export PROMPT_COMMAND='history -a'
+    export HISTFILE="$XDG_DATA_HOME/bash_history"
+    export HISTSIZE= export HISTFILESIZE= # Infinite history
+    export HISTTIMEFORMAT="%F %T %z "
+    export INPUTRC="$XDG_CONFIG_HOME/inputrc"
+    export VIRTUAL_ENV_DISABLE_PROMPT=1
+    export FZF_DEFAULT_OPTS="--color=16 --reverse --height 50% --prompt ' └─[ --:-- ]─>> '"
+    export FZF_CTRL_T_OPTS="--preview '(cat {}) 2> /dev/null | head -300'"
+
     # Aliases
+    alias tmux="tmux -u"
     alias ls="ls --color=auto"
     alias lsl="ls -hlA --color=auto"
     alias htop="htop -Ct"
@@ -83,8 +84,13 @@ if [[ $- == *i* ]]; then
     alias cpuhog="ps axhc -o cmd:15,%cpu --sort=-%cpu | head"
     alias memhog="ps axhc -o cmd:15,%mem --sort=-%mem | head"
 
-    # Source extra
+    # completion and fzf bindings
     source /usr/share/bash-completion/bash_completion
     source /usr/share/fzf/key-bindings.bash
     source /usr/share/bash-completion/completions/fzf
+
+    # Varia
+    stty -ixon # Disable ctrl-s and ctrl-q
+    shopt -s histappend
+
 fi
