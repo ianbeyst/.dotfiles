@@ -1,3 +1,4 @@
-export BASHPROFILESOURCED=yes
 source "$HOME"/.profile
-source "$HOME"/.bashrc
+if [[ $- == *i* ]]; then
+    source "$HOME"/.bashrc
+fi
