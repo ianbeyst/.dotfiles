@@ -7,6 +7,7 @@ DFDIR=$(dirname $(readlink -f "$0"))
 
 # Make directories if they don't exist yet
 mkdir -p "$XDG_CONFIG_HOME"/vim
+mkdir -p "$XDG_CONFIG_HOME"/npm
 mkdir -p "$XDG_CONFIG_HOME"/vim/colors
 mkdir -p "$XDG_CONFIG_HOME"/git
 mkdir -p "$XDG_DATA_HOME"/vim/undo
@@ -28,6 +29,7 @@ ln -sfn $DFDIR/config/inputrc "$XDG_CONFIG_HOME"/inputrc
 ln -sfn $DFDIR/config/xdg-dirs "$XDG_CONFIG_HOME"/user-dirs.dirs
 ln -sfn $DFDIR/config/vimrc "$XDG_CONFIG_HOME"/vim/vimrc
 ln -sfn $DFDIR/config/vimcolors "$XDG_CONFIG_HOME"/vim/colors/flattened_dark.vim
+ln -sfn $DFDIR/config/npmrc "$XDG_CONFIG_HOME"/npm/npmrc
 ln -sfn $DFDIR/config/redshift "$XDG_CONFIG_HOME"/redshift.conf
 
 

@@ -20,4 +20,5 @@ export XKB_DEFAULT_LAYOUT=dvorak
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export LESSHISTFILE="-"
 export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
