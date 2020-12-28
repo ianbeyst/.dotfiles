@@ -1,0 +1,7 @@
+auto lo
+iface lo inet loopback
+
+auto IFACE
+iface IFACE inet dhcp
+	hostname HOSTNAME
+
