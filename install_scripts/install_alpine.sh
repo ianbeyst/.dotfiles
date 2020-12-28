@@ -76,7 +76,8 @@ apk add \
     alsa-utils \
     alsa-lib \
     alsaconf \
-    acpi
+    acpi \
+    procps
 
 # Set up firewall
 ufw default deny incoming
