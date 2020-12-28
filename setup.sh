@@ -2,7 +2,7 @@
 
 DFDIR=$(dirname $(readlink -f "$0"))
 . $DFDIR/secrets
-
+. $DFDIR/config/profile
 
 
 # Make directories if they don't exist yet
@@ -48,6 +48,7 @@ git clone https://git.suckless.org/st
 git clone https://github.com/ianbeyst/slstatus.git
 
 cd dwm
+git checkout cb3f58ad06993f7ef3a7d8f61468012e2b786cab
 patch -p1 < "$DFDIR"/patches/dwm-customized-af20849.diff
 make
 sudo make install
