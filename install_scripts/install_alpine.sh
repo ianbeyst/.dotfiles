@@ -75,7 +75,8 @@ apk add \
     ncurses \
     alsa-utils \
     alsa-lib \
-    alsaconf
+    alsaconf \
+    acpi
 
 # Set up firewall
 ufw default deny incoming
@@ -95,7 +96,8 @@ rc-update add rngd boot
 rc-update add wpa_supplicant boot
 rc-update add ufw boot
 rc-update add crond default
-rc-update add alsa
+rc-update add alsa default
+rc-update add acpid default
 rc-update del networking boot
 rc-update -u
 
