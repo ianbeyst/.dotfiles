@@ -52,6 +52,7 @@ apk add \
     slock@community \
     ufw@community \
     neovim@community \
+    docker@community \
     ip6tables \
     rng-tools \
     sudo \
@@ -96,6 +97,7 @@ rc-update add urandom boot
 rc-update add rngd boot
 rc-update add wpa_supplicant boot
 rc-update add ufw boot
+rc-update add docker boot
 rc-update add crond default
 rc-update add alsa default
 rc-update add acpid default
@@ -104,10 +106,10 @@ rc-update -u
 
 # Set up user
 adduser -G wheel $USERNAME
-addgroup root video
 addgroup root audio
 addgroup $USERNAME video
 addgroup $USERNAME audio
+addgroup $USERNAME docker
 visudo
 
 # Use bash as login shell
