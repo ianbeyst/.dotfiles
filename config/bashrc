@@ -84,6 +84,7 @@ alias fehna="feh --keep-zoom-vp --force-aliasing -B black"
 alias dus="du -sch"
 alias cpuhog="ps axhc -o cmd:15,%cpu --sort=-%cpu | head"
 alias memhog="ps axhc -o cmd:15,%mem --sort=-%mem | head"
+alias vim="nvim"
 
 # completion and fzf bindings
 source /usr/share/bash-completion/bash_completion

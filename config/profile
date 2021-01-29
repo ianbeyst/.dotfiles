@@ -14,7 +14,7 @@ if test -z "${XDG_RUNTIME_DIR}"; then
 fi
 
 # Environment variables
-export EDITOR=vim
+export EDITOR=nvim
 export BROWSER=firefox
 export XKB_DEFAULT_LAYOUT=dvorak
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
