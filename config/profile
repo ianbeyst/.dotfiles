@@ -23,3 +23,9 @@ export LESSHISTFILE="-"
 export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+export PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
+export GNUPGHOME="$HOME/.local/share/gnupg"
+export DOCKER_CONFIG="$HOME/.local/share/docker"
+export AWS_CONFIG_FILE="$HOME/.local/share/aws/config"
+export AWS_SHARED_CREDENTIALS_FILE="$HOME/.local/share/aws/credentials"
+
