@@ -74,7 +74,7 @@ export FZF_CTRL_T_OPTS="--preview '(cat {}) 2> /dev/null | head -300'"
 # Aliases
 alias tmux="tmux -u"
 alias ls="ls --color=auto"
-alias lsl="ls -hlA --color=auto"
+alias lsl="ls -hlA --color=always | tail -n +2"
 alias htop="htop -Ct"
 alias startx="exec startx"
 alias startwl="exec swc-launch velox"
