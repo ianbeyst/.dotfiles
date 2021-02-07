@@ -67,6 +67,16 @@ apk add \
     libx11-dev \
     libxft-dev \
     libxinerama-dev \
+    libdrm-dev \
+    libxkbcommon-dev \
+    libxkbcommon-static \
+    libinput-dev@community \
+    libudev-zero-dev@community \
+    wayland-dev \
+    wayland-libs-server \
+    wayland-protocols \
+    pixman-dev \
+    pixman-static \
     linux-headers \
     bash \
     pm-utils \
@@ -78,7 +88,9 @@ apk add \
     alsa-lib \
     alsaconf \
     acpi \
-    procps
+    procps \
+    xdg-utils@community \
+    xdg-user-dirs@community
 
 # Set up firewall
 ufw default deny incoming
@@ -110,6 +122,7 @@ addgroup root audio
 addgroup $USERNAME video
 addgroup $USERNAME audio
 addgroup $USERNAME docker
+addgroup $USERNAME input
 visudo
 
 # Use bash as login shell
