@@ -90,7 +90,8 @@ apk add \
     acpi \
     procps \
     xdg-utils@community \
-    xdg-user-dirs@community
+    xdg-user-dirs@community \
+    openssh
 
 # Set up firewall
 ufw default deny incoming
