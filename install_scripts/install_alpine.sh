@@ -92,7 +92,8 @@ apk add \
     xdg-utils@community \
     xdg-user-dirs@community \
     openssh \
-    e2fsprogs-extra
+    e2fsprogs-extra \
+    rsync
 
 # Set up firewall
 ufw default deny incoming
