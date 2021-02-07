@@ -91,7 +91,8 @@ apk add \
     procps \
     xdg-utils@community \
     xdg-user-dirs@community \
-    openssh
+    openssh \
+    e2fsprogs-extra
 
 # Set up firewall
 ufw default deny incoming
