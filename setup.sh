@@ -95,6 +95,9 @@ sudo DFDIR=$DFDIR /bin/sh -c '
     # Make bash history file append only
     chattr +a $DFDIR/data/bash_history
 
+    # better lsl alias
+    ln -sfn $DFDIR/scriptslsl.sh /usr/local/bin/lsl
+
     # Suspend on critical battery state of charge
     mkdir -p /etc/periodic/1min
     cat /etc/crontabs/root | grep 1min || \
