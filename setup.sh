@@ -31,6 +31,11 @@ ln -sfn $DFDIR/config/vimrc "$XDG_CONFIG_HOME"/vim/vimrc
 ln -sfn $DFDIR/config/vimcolors "$XDG_CONFIG_HOME"/vim/colors/flattened_dark.vim
 ln -sfn $DFDIR/config/npmrc "$XDG_CONFIG_HOME"/npm/npmrc
 ln -sfn $DFDIR/config/redshift "$XDG_CONFIG_HOME"/redshift.conf
+ln -sfn $DFDIR/data/password-store ~/.password-store
+ln -sfn $DFDIR/data/gnupg ~/.gnupg
+ln -sfn $DFDIR/data/ssh ~/.ssh
+ln -sfn $DFDIR/data/mozilla ~/.mozilla
+ln -sfn $DFDIR/data/bash_history ~/.local/share/bash_history
 
 
 
@@ -86,6 +91,9 @@ rm -rf slstatus
 
 # Set up configuration with root access
 sudo DFDIR=$DFDIR /bin/sh -c '
+    # Make bash history file append only
+    chattr +a $DFDIR/data/bash_history
+
     # Suspend on critical battery state of charge
     mkdir -p /etc/periodic/1min
     cat /etc/crontabs/root | grep 1min || \
