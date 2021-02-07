@@ -68,7 +68,7 @@ export HISTFILESIZE=-1 # Infinite history
 export HISTTIMEFORMAT="%F %T %z "
 export INPUTRC="$XDG_CONFIG_HOME/inputrc"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export FZF_DEFAULT_OPTS="--color=16 --reverse --height 50% --prompt ' └─[ --:-- ]─>> '"
+export FZF_DEFAULT_OPTS="--color=16 --reverse --height 50% --inline-info --pointer='>>' --margin 0,0,0,1 --prompt '└─[ --:-- ]─>> '"
 export FZF_CTRL_T_OPTS="--preview '(cat {}) 2> /dev/null | head -300'"
 
 # Aliases
