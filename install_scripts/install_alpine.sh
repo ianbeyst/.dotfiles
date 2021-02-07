@@ -93,7 +93,8 @@ apk add \
     xdg-user-dirs@community \
     openssh \
     e2fsprogs-extra \
-    rsync
+    rsync \
+    coreutils
 
 # Set up firewall
 ufw default deny incoming
