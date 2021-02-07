@@ -34,6 +34,14 @@ ln -sfn $DFDIR/config/redshift "$XDG_CONFIG_HOME"/redshift.conf
 
 
 
+# Source .profile, .bash_profile and .bashrc and remove ~/.bash_history
+. ~/.profile
+. ~/.bash_profile
+. ~/.bashrc
+rm ~/.bash_history
+
+
+
 # Set up git
 touch "$XDG_CONFIG_HOME"/git/config
 git config --global user.name $GITNAME
