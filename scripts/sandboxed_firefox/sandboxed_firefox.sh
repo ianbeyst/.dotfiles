@@ -67,9 +67,9 @@ else
                -d \
                --cap-drop="all" \
                --read-only \
-               --pids-limit 300 \
+               --pids-limit 400 \
                --memory="2g" \
-               --cpus="2" \
+               --cpus="4" \
                --device="/dev/dri:/dev/dri" \
                -e DISPLAY \
                -e XAUTHORITY \
