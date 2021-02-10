@@ -16,6 +16,7 @@ mkdir -p "$XDG_DATA_HOME"/vim/backup
 mkdir -p ~/data
 mkdir -p ~/src
 mkdir -p ~/data/webcam
+mkdir -p ~/.local/bin
 
 
 
