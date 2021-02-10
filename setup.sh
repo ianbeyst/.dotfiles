@@ -37,6 +37,8 @@ ln -sfn $DFDIR/data/gnupg ~/.local/share/gnupg
 ln -sfn $DFDIR/data/aws ~/.local/share/aws
 ln -sfn $DFDIR/data/ssh ~/.ssh
 ln -sfn $DFDIR/data/mozilla ~/.mozilla
+ln -sfn $DFDIR/scripts/backup.sh ~/.local/bin/backup
+ln -sfn $DFDIR/scripts/sandboxed_firefox/sandboxed_firefox.sh ~/.local/bin/firefox
 
 
 
