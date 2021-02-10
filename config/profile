@@ -5,24 +5,26 @@ export XDG_CACHE_HOME="$HOME/.cache"
 mkdir -p "$XDG_DATA_HOME"
 mkdir -p "$XDG_CONFIG_HOME"
 mkdir -p "$XDG_CACHE_HOME"
-if test -z "${XDG_RUNTIME_DIR}"; then
-    export XDG_RUNTIME_DIR=/tmp/$(id -u $USER)-runtime-dir
-    if ! test -d "${XDG_RUNTIME_DIR}"; then
-        mkdir "${XDG_RUNTIME_DIR}"
-        chmod 0700 "${XDG_RUNTIME_DIR}"
-        touch "$XDG_RUNTIME_DIR"/Xauthority
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+    USER_ID=$(id -u "$USER")
+    export XDG_RUNTIME_DIR="/tmp/$USER_ID-runtime-dir"
+    if [ ! -d "$XDG_RUNTIME_DIR" ]; then
+        mkdir "$XDG_RUNTIME_DIR"
+        chmod 0700 "$XDG_RUNTIME_DIR"
+        touch "$XDG_RUNTIME_DIR/Xauthority"
     fi
 fi
 
 # Environment variables
+export LD_LIBRARY_PATH="/opt/OpenBLAS/lib:$LD_LIBRARY_PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim
 export BROWSER=firefox
+export LESSHISTFILE="-"
 export XKB_DEFAULT_LAYOUT=dvorak
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
-export LESSHISTFILE="-"
 export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
-export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
-export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 export GNUPGHOME="$HOME/.local/share/gnupg"
 export DOCKER_CONFIG="$HOME/.local/share/docker"
