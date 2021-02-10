@@ -67,7 +67,7 @@ else
                -d \
                --cap-drop="all" \
                --read-only \
-               --pids-limit 400 \
+               --pids-limit 500 \
                --memory="2g" \
                --cpus="4" \
                --device="/dev/dri:/dev/dri" \
