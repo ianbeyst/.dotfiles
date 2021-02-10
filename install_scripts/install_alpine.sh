@@ -40,7 +40,6 @@ apk add \
     xf86-input-libinput@community \
     setxkbmap@community \
     xsetroot@community \
-    firefox@community \
     dmenu@community \
     redshift@community \
     fzf@community \
