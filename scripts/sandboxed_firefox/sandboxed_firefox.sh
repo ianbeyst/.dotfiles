@@ -79,6 +79,7 @@ else
                -v "$DOWNLOADS_DIR":"$HOME/Downloads":rw \
                --tmpfs "$HOME/.cache" \
                --tmpfs "$HOME/.local" \
+               --tmpfs "/tmp" \
                ffsandbox \
                > $PROFILE_DIR/container_id
     fi
