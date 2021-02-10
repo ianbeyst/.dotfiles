@@ -24,7 +24,7 @@ PROGNAME="$0"
 
 usage() {
     cat << EOF >&2
-Usage: $PROGNAME [-h] [-b]
+Usage: $PROGNAME [-h] [-d <dest>]
 
 -h       : Show this help.
 -d <dest>: Backup the user's home directory to <dest>.
