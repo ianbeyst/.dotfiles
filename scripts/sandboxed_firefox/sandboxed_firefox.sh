@@ -69,6 +69,7 @@ else
                --read-only \
                --pids-limit 500 \
                --memory="2g" \
+               --memory-swap="6g" \
                --cpus="4" \
                --device="/dev/dri:/dev/dri" \
                -e DISPLAY \
