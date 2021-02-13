@@ -18,7 +18,9 @@ RUN apk update && apk upgrade && apk add firefox \
                                          mesa-egl \
                                          mesa-gles \
                                          ffmpeg-libs \
-                                         mesa-dri-gallium
+                                         mesa-dri-gallium \
+                                         libpulse
+COPY pulseaudio_docker_client_config /etc/pulse/client.conf
 RUN addgroup -g $GROUPID -S browsers && adduser -G browsers -S -D -u $USERID $USER && addgroup $USER video && addgroup $USER audio
 USER $USER
 WORKDIR /home/$USER

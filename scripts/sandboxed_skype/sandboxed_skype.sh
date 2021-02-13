@@ -32,8 +32,9 @@ shift "$((OPTIND-1))"
 if [ "$BUILD" = "true" ]; then
     cd "$SRCDIR"
     cp "$SRCDIR/../../config/pulseaudio_docker_client_config" ./
+    wget https://repo.skype.com/latest/skypeforlinux-64.deb
 
-    docker build --tag ffsandbox \
+    docker build --tag skypesandbox \
                  --no-cache \
                  --rm \
                  --force-rm \
@@ -43,12 +44,14 @@ if [ "$BUILD" = "true" ]; then
                  .
 
     rm pulseaudio_docker_client_config
+    rm skypeforlinux-64.deb
     docker rmi $(docker images -f "dangling=true" -q)
 else
     DOWNLOADS_DIR="$(xdg-user-dir DOWNLOAD)/$(date +%Y%m%d)"
-    PROFILE_DIR="$HOME/.mozilla"
+    PROFILE_DIR="$HOME/.config/skypeforlinux"
 
     mkdir -p "$DOWNLOADS_DIR"
+    mkdir -p "$PROFILE_DIR"
 
     if [ -f "$PROFILE_DIR/container_id" ]; then
         CONTAINER_ID=$(cat "$PROFILE_DIR/container_id")
@@ -60,7 +63,7 @@ else
     fi
 
     if [ "$CONTAINER_RUNNING" == "true" ]; then
-        docker exec -d $CONTAINER_ID firefox
+        docker exec -d $CONTAINER_ID skypeforlinux
     else
         XSOCK=/tmp/.X11-unix
         xauth -b nlist "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -b -f "$XAUTHORITY" nmerge -
@@ -75,12 +78,14 @@ else
                -d \
                --cap-drop="all" \
                --security-opt no-new-privileges \
+               --security-opt seccomp="$SRCDIR/seccomp.json" \
                --read-only \
-               --pids-limit 500 \
-               --memory="2g" \
-               --memory-swap="6g" \
+               --pids-limit 200 \
+               --memory="1g" \
+               --memory-swap="3g" \
                --cpus="4" \
                --device="/dev/dri:/dev/dri" \
+               --device="/dev/video0":"/dev/video0" \
                -e DISPLAY \
                -e XAUTHORITY \
                -e PULSE_SERVER="unix:$PULSE_SOCKET" \
@@ -88,16 +93,14 @@ else
                -v "$XSOCK":"$XSOCK":ro \
                -v "$XAUTHORITY":"$XAUTHORITY":ro \
                -v "$PULSE_SOCKET":"$PULSE_SOCKET":ro \
-               -v "$PROFILE_DIR":"$HOME/.mozilla":rw \
+               -v "$PROFILE_DIR":"$PROFILE_DIR":rw \
                -v "$DOWNLOADS_DIR":"$HOME/Downloads":rw \
                --tmpfs "$HOME/.cache" \
-               --tmpfs "$HOME/.local" \
+               --tmpfs "$HOME/.config" \
+               --tmpfs "$HOME/.pki" \
                --tmpfs "/tmp" \
-               ffsandbox \
+               skypesandbox \
                > $PROFILE_DIR/container_id
-
-               # --device="/dev/snd:/dev/snd" \
-
     fi
 fi
 

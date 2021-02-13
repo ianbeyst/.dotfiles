@@ -32,23 +32,24 @@ shift "$((OPTIND-1))"
 if [ "$BUILD" = "true" ]; then
     cd "$SRCDIR"
     cp "$SRCDIR/../../config/pulseaudio_docker_client_config" ./
+    SPOTIFY_REPO_KEY=$(curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg)
 
-    docker build --tag ffsandbox \
+    docker build --tag spotifysandbox \
                  --no-cache \
                  --rm \
                  --force-rm \
                  --build-arg USERNAME=$USER \
                  --build-arg USERID=$(id -u) \
                  --build-arg GROUPID=1000 \
+                 --build-arg SPOTIFY_REPO_KEY="$SPOTIFY_REPO_KEY" \
                  .
 
     rm pulseaudio_docker_client_config
     docker rmi $(docker images -f "dangling=true" -q)
 else
-    DOWNLOADS_DIR="$(xdg-user-dir DOWNLOAD)/$(date +%Y%m%d)"
-    PROFILE_DIR="$HOME/.mozilla"
+    PROFILE_DIR="$HOME/.config/spotify"
 
-    mkdir -p "$DOWNLOADS_DIR"
+    mkdir -p "$PROFILE_DIR"
 
     if [ -f "$PROFILE_DIR/container_id" ]; then
         CONTAINER_ID=$(cat "$PROFILE_DIR/container_id")
@@ -60,7 +61,7 @@ else
     fi
 
     if [ "$CONTAINER_RUNNING" == "true" ]; then
-        docker exec -d $CONTAINER_ID firefox
+        docker exec -d $CONTAINER_ID spotify
     else
         XSOCK=/tmp/.X11-unix
         xauth -b nlist "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -b -f "$XAUTHORITY" nmerge -
@@ -75,11 +76,12 @@ else
                -d \
                --cap-drop="all" \
                --security-opt no-new-privileges \
+               --security-opt seccomp="$SRCDIR/seccomp.json" \
                --read-only \
-               --pids-limit 500 \
-               --memory="2g" \
-               --memory-swap="6g" \
-               --cpus="4" \
+               --pids-limit 200 \
+               --memory="512m" \
+               --memory-swap="2g" \
+               --cpus="2" \
                --device="/dev/dri:/dev/dri" \
                -e DISPLAY \
                -e XAUTHORITY \
@@ -88,16 +90,12 @@ else
                -v "$XSOCK":"$XSOCK":ro \
                -v "$XAUTHORITY":"$XAUTHORITY":ro \
                -v "$PULSE_SOCKET":"$PULSE_SOCKET":ro \
-               -v "$PROFILE_DIR":"$HOME/.mozilla":rw \
-               -v "$DOWNLOADS_DIR":"$HOME/Downloads":rw \
+               -v "$PROFILE_DIR":"$PROFILE_DIR":rw \
                --tmpfs "$HOME/.cache" \
-               --tmpfs "$HOME/.local" \
+               --tmpfs "$HOME/.pki" \
                --tmpfs "/tmp" \
-               ffsandbox \
+               spotifysandbox \
                > $PROFILE_DIR/container_id
-
-               # --device="/dev/snd:/dev/snd" \
-
     fi
 fi
 
