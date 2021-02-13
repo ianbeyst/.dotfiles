@@ -32,6 +32,8 @@ ln -sfn $DFDIR/config/vimrc "$XDG_CONFIG_HOME"/vim/vimrc
 ln -sfn $DFDIR/config/vimcolors "$XDG_CONFIG_HOME"/vim/colors/flattened_dark.vim
 ln -sfn $DFDIR/config/npmrc "$XDG_CONFIG_HOME"/npm/npmrc
 ln -sfn $DFDIR/config/redshift "$XDG_CONFIG_HOME"/redshift.conf
+ln -sfn $DFDIR/data/spotify "$XDG_CONFIG_HOME"/spotify
+ln -sfn $DFDIR/data/Slack "$XDG_CONFIG_HOME"/Slack
 ln -sfn $DFDIR/data/password-store ~/.local/share/password-store
 ln -sfn $DFDIR/data/bash_history ~/.local/share/bash_history
 ln -sfn $DFDIR/data/gnupg ~/.local/share/gnupg
@@ -40,6 +42,9 @@ ln -sfn $DFDIR/data/ssh ~/.ssh
 ln -sfn $DFDIR/data/mozilla ~/.mozilla
 ln -sfn $DFDIR/scripts/backup.sh ~/.local/bin/backup
 ln -sfn $DFDIR/scripts/sandboxed_firefox/sandboxed_firefox.sh ~/.local/bin/firefox
+ln -sfn $DFDIR/scripts/sandboxed_slack/sandboxed_slack.sh ~/.local/bin/slack
+ln -sfn $DFDIR/scripts/sandboxed_skype/sandboxed_skype.sh ~/.local/bin/skype
+ln -sfn $DFDIR/scripts/sandboxed_spotify/sandboxed_spotify.sh ~/.local/bin/spotify
 
 
 
@@ -99,7 +104,7 @@ sudo DFDIR=$DFDIR /bin/sh -c '
     chattr +a $DFDIR/data/bash_history
 
     # better lsl alias
-    ln -sfn $DFDIR/scriptslsl.sh /usr/local/bin/lsl
+    ln -sfn $DFDIR/scripts/lsl.sh /usr/local/bin/lsl
 
     # Suspend on critical battery state of charge
     mkdir -p /etc/periodic/1min

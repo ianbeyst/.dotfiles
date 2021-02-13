@@ -83,9 +83,10 @@ apk add \
     tmux \
     htop \
     ncurses \
-    alsa-utils \
-    alsa-lib \
-    alsaconf \
+    pulseaudio@community \
+    pulseaudio-alsa \
+    alsa-plugins-pulse \
+    pulseaudio-utils@community \
     acpi \
     procps \
     xdg-utils@community \
@@ -93,7 +94,8 @@ apk add \
     openssh \
     e2fsprogs-extra \
     rsync \
-    coreutils
+    coreutils \
+    curl
 
 # Set up firewall
 ufw default deny incoming
