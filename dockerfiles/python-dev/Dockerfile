@@ -11,8 +11,7 @@ RUN apt update -y && apt upgrade -y && apt install -y --no-install-recommends \
                                                       python3-pip \
                                                       bash-completion \
                                                       git \
-                                                      wget \
-                                                      gnupg2
+                                                      wget
 RUN addgroup --gid $GROUP_ID developers
 RUN adduser --ingroup developers --disabled-password --uid $USER_ID --gecos "" $USER
 COPY ./ /home/$USER/.dotfiles
