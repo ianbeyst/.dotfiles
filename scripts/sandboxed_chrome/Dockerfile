@@ -3,8 +3,7 @@ ARG USERNAME
 ARG USERID
 ARG GROUPID
 ENV USER=$USERNAME
-ENV BROWSER /usr/local/bin/browser
-COPY browser.sh /usr/local/bin/browser
+COPY google-chrome-stable_current_amd64.deb ./
 RUN groupmod -g 27 --non-unique video
 RUN addgroup --gid $GROUPID browsers
 RUN adduser --ingroup browsers --disabled-password --uid $USERID --gecos "" $USER
@@ -14,14 +13,12 @@ RUN apt update -y && apt upgrade -y && apt install -y --no-install-recommends \
                                                       xauth \
                                                       zenity \
                                                       xclip \
-                                                      libpulse0 \
-                                                      procps
-COPY skypeforlinux-64.deb ./
-RUN apt install -y --no-install-recommends ./skypeforlinux-64.deb
-RUN rm skypeforlinux-64.deb
+                                                      libxkbfile1 \
+                                                      libpulse0
+RUN apt install -y --no-install-recommends ./google-chrome-stable_current_amd64.deb
 COPY pulseaudio_docker_client_config /etc/pulse/client.conf
-COPY skype_entrypoint.sh /home/$USER/.local/bin/skype
+RUN rm google-chrome-stable_current_amd64.deb
 USER $USER
 WORKDIR /home/$USER
-CMD /home/$USER/.local/bin/skype
+CMD google-chrome --disable-dev-shm-usage > /home/io/.config/google-chrome/stdout 2> /home/io/.config/google-chrome/stderr
 

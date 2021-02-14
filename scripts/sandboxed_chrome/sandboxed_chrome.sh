@@ -32,9 +32,9 @@ shift "$((OPTIND-1))"
 if [ "$BUILD" = "true" ]; then
     cd "$SRCDIR"
     cp "$SRCDIR/../../config/pulseaudio_docker_client_config" ./
-    wget https://repo.skype.com/latest/skypeforlinux-64.deb
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-    docker build --tag skypesandbox \
+    docker build --tag chromesandbox \
                  --no-cache \
                  --rm \
                  --force-rm \
@@ -44,11 +44,11 @@ if [ "$BUILD" = "true" ]; then
                  .
 
     rm pulseaudio_docker_client_config
-    rm skypeforlinux-64.deb
+    rm google-chrome-stable_current_amd64.deb
     docker rmi $(docker images -f "dangling=true" -q)
 else
     DOWNLOADS_DIR="$(xdg-user-dir DOWNLOAD)/$(date +%Y%m%d)"
-    PROFILE_DIR="$HOME/.config/skypeforlinux"
+    PROFILE_DIR="$HOME/.config/google-chrome"
 
     mkdir -p "$DOWNLOADS_DIR"
     mkdir -p "$PROFILE_DIR"
@@ -63,7 +63,7 @@ else
     fi
 
     if [ "$CONTAINER_RUNNING" == "true" ]; then
-        docker exec -d $CONTAINER_ID skypeforlinux
+        docker exec -d $CONTAINER_ID google-chrome
     else
         XSOCK=/tmp/.X11-unix
         xauth -b nlist "$DISPLAY" | sed -e 's/^..../ffff/' | xauth -b -f "$XAUTHORITY" nmerge -
@@ -76,13 +76,13 @@ else
         docker run \
                --rm \
                -d \
+               --read-only \
                --cap-drop="all" \
                --security-opt no-new-privileges \
                --security-opt seccomp="$SRCDIR/seccomp.json" \
-               --read-only \
-               --pids-limit 200 \
-               --memory="1g" \
-               --memory-swap="3g" \
+               --pids-limit 500 \
+               --memory="2g" \
+               --memory-swap="6g" \
                --cpus="4" \
                --device="/dev/dri:/dev/dri" \
                --device="/dev/video0":"/dev/video0" \
@@ -97,9 +97,9 @@ else
                -v "$DOWNLOADS_DIR":"$HOME/Downloads":rw \
                --tmpfs "$HOME/.cache" \
                --tmpfs "$HOME/.config" \
-               --tmpfs "$HOME/.pki" \
+               --tmpfs "$HOME/.local" \
                --tmpfs "/tmp" \
-               skypesandbox \
+               chromesandbox \
                > $PROFILE_DIR/container_id
     fi
 fi
