@@ -1,27 +1,34 @@
-#!/bin/sh
+#!/bin/sh -e
+PROGNAME="$0"
+SRCDIR=$(dirname $(readlink -f "$0"))
+DFDIR="$SRCDIR/.."
+
 
 # Read the installation options
-. install_options
+. "$DFDIR/install_scripts/install_options"
 
 # Basic setup
 setup-keymap us us-dvorak
 setup-hostname $NEWHOSTNAME
-sed "s/IFACE/$IFACE/g" interfaces.template \
+setup-timezone -z $TIMEZONE
+sed "s/IFACE/$IFACE/g" "$DFDIR/install_scripts/interfaces.template" \
     | sed -e "s/HOSTNAME/$NEWHOSTNAME/g" \
     | setup-interfaces -i
 apk add wpa_supplicant
-sed "s/SSID/$SSID/g" wpa_supplicant.conf.template \
+sed "s/SSID/$SSID/g" "$DFDIR/install_scripts/wpa_supplicant.conf.template" \
     | sed -e "s/PSK/$PSK/g" \
     > /etc/wpa_supplicant/wpa_supplicant.conf
-wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i $IFACE
-udhcpc -i $IFACE
-setup-timezone -z $TIMEZONE
-setup-ntp -c chrony
+if [ -z "$IS_DOCKER" ]; then
+    wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i $IFACE
+    udhcpc -i $IFACE
+    setup-ntp -c chrony
+else
+    :> /etc/apk/repositories
+fi
 setup-apkrepos -1
-passwd
 
 # Set up repositories (for edge)
-sed -i '/v3.12\/main/ s/^/#/' /etc/apk/repositories
+sed -i '/v3.13\/main/ s/^/#/' /etc/apk/repositories
 sed -i '/edge\/main/ s/^#//' /etc/apk/repositories
 sed -i '/edge\/community/ s/^#/@community /' /etc/apk/repositories
 sed -i '/edge\/testing/ s/^#/@testing /' /etc/apk/repositories
@@ -42,8 +49,6 @@ apk add \
     xsetroot@community \
     dmenu@community \
     redshift@community \
-    fzf@community \
-    fzf-bash-completion@community \
     v4l-utils@community \
     ffmpeg@community \
     feh@community \
@@ -84,8 +89,8 @@ apk add \
     htop \
     ncurses \
     pulseaudio@community \
-    pulseaudio-alsa \
-    alsa-plugins-pulse \
+    pulseaudio-alsa@community \
+    alsa-plugins-pulse@community \
     pulseaudio-utils@community \
     acpi \
     procps \
@@ -97,47 +102,69 @@ apk add \
     coreutils \
     curl
 
-# Set up firewall
-ufw default deny incoming
-ufw default deny outgoing
-ufw allow out SSH
-ufw allow out 123/udp
-ufw allow out DNS
-ufw allow out 80/tcp
-ufw allow out 443
-ufw enable
-service ufw start
+if [ -z "$IS_DOCKER" ]; then
+    # Set up firewall
+    ufw default deny incoming
+    ufw default deny outgoing
+    ufw allow out SSH
+    ufw allow out 123/udp
+    ufw allow out DNS
+    ufw allow out 80/tcp
+    ufw allow out 443
+    ufw enable
+    service ufw start
 
-# Set up services
-setup-udev
-rc-update add urandom boot
-rc-update add rngd boot
-rc-update add wpa_supplicant boot
-rc-update add ufw boot
-rc-update add docker boot
-rc-update add crond default
-rc-update add alsa default
-rc-update add acpid default
-rc-update del networking boot
-rc-update -u
+    # Set up services
+    setup-udev
+    rc-update add urandom boot
+    rc-update add rngd boot
+    rc-update add wpa_supplicant boot
+    rc-update add ufw boot
+    rc-update add docker boot
+    rc-update add crond default
+    rc-update add alsa default
+    rc-update add acpid default
+    rc-update del networking boot
+    rc-update -u
+fi
 
-# Set up user
-adduser -G wheel $USERNAME
-addgroup root audio
+# Set up users and groups
+GROUPNAME="$USERNAME"
+addgroup -g 1000 -S "$GROUPNAME"
+adduser -G "$GROUPNAME" -S -u 1000 -s /bin/bash $USERNAME
+if [ -z "$IS_DOCKER" ]; then
+    passwd
+else
+    passwd << EOF
+123456789
+123456789
+EOF
+    passwd $USERNAME << EOF
+123456789
+123456789
+EOF
+fi
+# addgroup root audio
 addgroup $USERNAME video
 addgroup $USERNAME audio
 addgroup $USERNAME docker
 addgroup $USERNAME input
-visudo
+addgroup $USERNAME wheel
 
-# Use bash as login shell
-sed -i "s+/home/$USERNAME:/bin/ash+/home/$USERNAME:/bin/bash+g" /etc/passwd
+echo '%wheel ALL=(ALL) ALL' | sudo EDITOR='tee -a' visudo
 
-# Perform the installation
-export BOOT_SIZE=$BOOT_SIZE
-setup-disk -m sys -s $SWAP_SIZE $INSTALL_DISK
 
-# Create the user's home directory on the installation disk
-mount -t ext4 ${INSTALL_DISK}p3 /mnt
-mkdir /mnt/home/$USERNAME
-chown -R $USERNAME /mnt/home/$USERNAME
+
+if [ -z "$IS_DOCKER" ]; then
+    # Perform the installation
+    export BOOT_SIZE=$BOOT_SIZE
+    setup-disk -m sys -s $SWAP_SIZE $INSTALL_DISK
+
+    # Create the user's home directory on the installation disk
+    mount -t ext4 "$INSTALL_DISK"p3 /mnt
+    mkdir "/mnt/home/$USERNAME"
+    chown -R "$USERNAME":"$GROUPNAME" "/mnt/home/$USERNAME"
+else
+    chown -R "$USERNAME":"$GROUPNAME" "/home/$USERNAME"
+fi
+
