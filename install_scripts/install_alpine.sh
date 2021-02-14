@@ -28,10 +28,7 @@ fi
 setup-apkrepos -1
 
 # Set up repositories (for edge)
-sed -i '/v3.13\/main/ s/^/#/' /etc/apk/repositories
-sed -i '/edge\/main/ s/^#//' /etc/apk/repositories
-sed -i '/edge\/community/ s/^#/@community /' /etc/apk/repositories
-sed -i '/edge\/testing/ s/^#/@testing /' /etc/apk/repositories
+sed -i '/v3.13\/community/ s/^#/@community /' /etc/apk/repositories
 
 # Remove tty's
 sed -i '/tty[2-9]/ s/^/#/' /etc/inittab
