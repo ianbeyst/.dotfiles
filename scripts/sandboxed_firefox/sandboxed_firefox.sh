@@ -95,9 +95,6 @@ else
                --tmpfs "/tmp" \
                ffsandbox \
                > $PROFILE_DIR/container_id
-
-               # --device="/dev/snd:/dev/snd" \
-
     fi
 fi
 
