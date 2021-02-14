@@ -34,14 +34,8 @@ fi
 
 
 
-
-
-
-
-
-
-
 . "$DFDIR/config/profile"
+
 
 
 # Make sure all files and directories exist
