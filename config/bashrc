@@ -56,8 +56,12 @@ get_venv() {
     fi
 }
 
+error_status() {
+    echo -e '\033[1m\n ┌─[ '$1
+}
+
 # Prompt
-PS1='$(echo -e "\[\033[1m\n\]") ┌─[ $? ]─[ $HOSTNAME ]─[ \w ]$(parse_git_branch)$(get_venv)$(echo -e "\[\033[0m\]\n \[\033[1m\]└─[ ")$(date +%H:%M)$(echo -e " ]─>> \[\033[0m\]")'
+PS1='$(error_status $?) ]─[ $HOSTNAME ]─[ \w ]$(parse_git_branch)$(get_venv)$(echo -e "\[\033[0m\]\n \[\033[1m\]└─[ ")$(date +%H:%M)$(echo -e " ]─>> \[\033[0m\]")'
 PS2='             \[\033[1m\]>>\[\033[0m\] '
 
 # Environment variables
